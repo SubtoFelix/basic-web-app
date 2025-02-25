@@ -15,8 +15,22 @@ export default function QueryProcessor(query: string): string {
     return "Rohan";
   }
 
-  if (query.toLowerCase().includes("58 plus 86")) {
-    return "144";
+  // Check for addition queries
+  if (query.toLowerCase().includes("plus")) {
+    // Extract numbers and compute the result
+    const numbers = query.match(/\d+/g)?.map(Number); // Safely handle null
+    if (numbers && numbers.length === 2) {
+      return (numbers[0] + numbers[1]).toString();
+    }
+  }
+
+  // Check for largest number queries
+  if (query.toLowerCase().includes("largest")) {
+    // Extract numbers and find the largest
+    const numbers = query.match(/\d+/g)?.map(Number); // Safely handle null
+    if (numbers && numbers.length > 0) {
+      return Math.max(...numbers).toString();
+    }
   }
 
   return "";
