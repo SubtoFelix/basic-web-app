@@ -15,12 +15,12 @@ export default function QueryProcessor(query: string): string {
     return "Rohan";
   }
 
-  // Check for addition queries
+  // General addition query
   if (query.toLowerCase().includes("plus")) {
-    // Extract numbers and compute the result
     const numbers = query.match(/\d+/g)?.map(Number); // Safely handle null
-    if (numbers && numbers.length === 2) {
-      return (numbers[0] + numbers[1]).toString();
+    if (numbers && numbers.length > 0) {
+      const sum = numbers.reduce((acc, num) => acc + num, 0);
+      return sum.toString();
     }
   }
 
@@ -50,6 +50,15 @@ export default function QueryProcessor(query: string): string {
     }
   }
 
+  // Check for prime numbers
+  if (query.toLowerCase().includes("are primes")) {
+    const numbers = query.match(/\d+/g)?.map(Number); // Safely handle null
+    if (numbers && numbers.length > 0) {
+      const primes = numbers.filter((num) => isPrime(num));
+      return primes.length > 0 ? primes.join(", ") : "None";
+    }
+  }
+
   return "";
 }
 
@@ -58,4 +67,13 @@ function isSquareAndCube(num: number): boolean {
   const cubeRoot = Math.cbrt(num);
   const squareRoot = Math.sqrt(num);
   return Number.isInteger(cubeRoot) && Number.isInteger(squareRoot);
+}
+
+// Helper function to check if a number is prime
+function isPrime(num: number): boolean {
+  if (num < 2) return false; // Numbers less than 2 are not prime
+  for (let i = 2, sqrt = Math.sqrt(num); i <= sqrt; i++) {
+    if (num % i === 0) return false;
+  }
+  return true;
 }
