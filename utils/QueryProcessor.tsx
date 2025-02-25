@@ -24,6 +24,14 @@ export default function QueryProcessor(query: string): string {
     }
   }
 
+  // Check for subtraction queries
+  if (query.toLowerCase().includes("minus")) {
+    const numbers = query.match(/\d+/g)?.map(Number); // Safely handle null
+    if (numbers && numbers.length === 2) {
+      return (numbers[0] - numbers[1]).toString();
+    }
+  }
+
   // Check for multiplication queries
   if (query.toLowerCase().includes("multiplied by")) {
     const numbers = query.match(/\d+/g)?.map(Number); // Safely handle null
@@ -38,6 +46,15 @@ export default function QueryProcessor(query: string): string {
     const numbers = query.match(/\d+/g)?.map(Number); // Safely handle null
     if (numbers && numbers.length > 0) {
       return Math.max(...numbers).toString();
+    }
+  }
+
+  // Check for exponentiation queries
+  if (query.toLowerCase().includes("to the power of")) {
+    const numbers = query.match(/\d+/g)?.map(Number); // Safely handle null
+    if (numbers && numbers.length === 2) {
+      const result = numbers[0] ** numbers[1]; // Use BigInt for large numbers
+      return result.toString(); // Convert BigInt result to string
     }
   }
 
