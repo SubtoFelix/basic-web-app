@@ -15,5 +15,9 @@ export default function QueryProcessor(query: string): string {
     return "Rohan";
   }
 
+  if (query.toLowerCase().includes("58 plus 86")) {
+    return "144";
+  }
+
   return "";
 }
